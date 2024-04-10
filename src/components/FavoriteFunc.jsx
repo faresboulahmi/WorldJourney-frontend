@@ -20,6 +20,7 @@ export default function FavoriteFunc({ tour }) {
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: 'include',
           body: JSON.stringify({
             ...currentUser,
             wishList: wishList,

@@ -16,6 +16,7 @@ export default function ReviewsCard({ review, tour }) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           ...review,
           favorite: review.favorite === false ? true : false,
@@ -72,6 +73,7 @@ export default function ReviewsCard({ review, tour }) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           ...tours,
           totalReviews: tours.totalReviews - 1,
@@ -80,6 +82,7 @@ export default function ReviewsCard({ review, tour }) {
       });
       const res = await fetch(`${url}/api/reviews/delete/${review._id}`, {
         method: "DELETE",
+        credentials: 'include',
       });
       const data = await res.json();
       if (data.success === false) {
@@ -108,8 +111,8 @@ export default function ReviewsCard({ review, tour }) {
           {review.rating} <FaStar className="text-yellow-400 p-1 text-2xl" />
         </div>
       </div>
-      <div className="flex flex-col  sm:flex-row gap-2 ml-10 justify-center items-center">
-        <p className="p-2 flex-1 text-gray-900 rounded-lg border-gray-900">
+      <div className="flex flex-col items-start sm:flex-row flex-wrap gap-2 ml-10 justify-center sm:items-center">
+        <p className="p-2 flex-1 text-gray-900 rounded-lg border-gray-900 text-start">
           {review.reviewText}
         </p>
         {tour &&

@@ -105,7 +105,7 @@ export default function ReviewsControle() {
         <h1 className="text-3xl font-semibold  p-3 text-slate-700 mx-5 my-5">
           Reviews result
         </h1>
-        <div className="p-7 flex flex-col gap-4 border-t">
+        <div className="p-7 flex flex-col gap-4 border-t min-h-[30vh]">
           {!loading && reviews.length === 0 && (
             <p className="text-xl text-slate-700">No Reviews found!</p>
           )}

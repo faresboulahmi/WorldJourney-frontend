@@ -16,6 +16,7 @@ const clearWish = async () => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: 'include',
       body: JSON.stringify({
         ...currentUser,
         wishList: [],
@@ -42,7 +43,7 @@ const swalDelete = () => {
 
   return (
     <div className='m-auto max-w-6xl pt-10 '>
-     <div className='flex flex-row flex-wrap gap-4 p-2 m-auto min-h-[50%]'>
+     <div className='flex flex-row flex-wrap gap-4 p-2 m-auto min-h-[60vh]'>
      {wishList.length > 0 && currentUser ?  (<div  className='flex flex-col w-full m-auto '>
      <div className='flex flex-row flex-wrap gap-4 p-2  justify-center'>
      {wishList.map((tour) => (<TourCard key={tour._id} tour={tour}/>))}

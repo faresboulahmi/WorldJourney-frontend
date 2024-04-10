@@ -53,7 +53,7 @@ export default function Logout() {
         </div>
       ) : (
         <Link to="/sign-up" className="w-full">
-          <li className=" text-white bg-orange-500 p-2  font-semibold rounded-lg cursor-pointer w-full">
+          <li className=" text-white text-center  bg-orange-500 p-2  font-semibold rounded-lg cursor-pointer w-full hover:bg-white hover:text-orange-500 transition-all">
             {" "}
             Sign Up
           </li>

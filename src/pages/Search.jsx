@@ -130,7 +130,7 @@ export default function Search() {
         <h1 className="max-w-6xl m-auto text-3xl font-semibold  p-3 text-slate-700 my-5 ">
           Tour results:
         </h1>
-        <div className="p-7 flex flex-wrap gap-4 border-t justify-center">
+        <div className="p-7 flex flex-wrap gap-4 border-t justify-center min-h-[30vh]">
           {!loading && tour.length === 0 && (
             <p className="text-xl text-slate-700">No Tour found!</p>
           )}

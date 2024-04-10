@@ -55,6 +55,7 @@ export default function UserCard({ user }) {
     try {
       const res = await fetch(`${url}/api/admin/delete/${user._id}`, {
         method: "DELETE",
+        credentials: 'include',
       });
       const data = await res.json();
       if (data.success === false) {
@@ -77,6 +78,7 @@ export default function UserCard({ user }) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           ...user,
           role: role,

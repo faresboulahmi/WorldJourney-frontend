@@ -43,7 +43,7 @@ export default function TourControl() {
     
   };
   return (
-    <div className="flex flex-row flex-wrap gap-8 p-2 max-w-6xl m-auto mt-8 min-h-[50%]">
+    <div className="flex flex-row flex-wrap gap-8 p-2 max-w-6xl m-auto mt-8 min-h-[60vh]">
       {loading && (
             <p className="text-xl text-slate-700 text-center w-full">
               Loading...

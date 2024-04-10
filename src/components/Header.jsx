@@ -184,14 +184,16 @@ export default function Header() {
                     Profile
                   </li>
                 ): (
-                  <li className=" bg-white w-full mx-auto my-2 p-4 text-center font-semibold  rounded-lg text-orange-500 border-2 border-orange-500 hover:bg-orange-500 hover:text-white transition-all">
+                  <li className=" bg-white w-full  mx-auto my-2 p-4 text-center font-semibold  rounded-lg text-orange-500 border-2 border-orange-500 hover:bg-orange-500 hover:text-white transition-all">
                     {" "}
                     Sign in
                   </li>
 
                 )}
               </Link>
+              <div className="w-full bg-orange-500 rounded-lg p-3 hover:bg-white hover:border-2 hover:border-orange-500 transition-all">
               <Logout />
+              </div>
             </div>
           )}
         </ul>

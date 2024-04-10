@@ -119,6 +119,7 @@ export default function CreateReviews({tour}) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           ...formData,
           _id: `${currentUser._id}${tour._id}`,
@@ -130,6 +131,7 @@ export default function CreateReviews({tour}) {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: 'include',
         body: JSON.stringify({
           ...tours,
           totalReviews: tours.totalReviews + 1,
