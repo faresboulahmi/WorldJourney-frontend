@@ -20,6 +20,7 @@ export default function ReviewsCard({ review, tour }) {
         body: JSON.stringify({
           ...review,
           favorite: review.favorite === false ? true : false,
+          access_token: currentUser.access_token
         }),
       });
       if (review.favorite === false) {
@@ -78,11 +79,13 @@ export default function ReviewsCard({ review, tour }) {
           ...tours,
           totalReviews: tours.totalReviews - 1,
           reviews: tours.reviews - review.rating,
+          access_token: currentUser.access_token
         }),
       });
       const res = await fetch(`${url}/api/reviews/delete/${review._id}`, {
         method: "DELETE",
         credentials: 'include',
+        body: JSON.stringify({access_token: currentUser.access_token})
       });
       const data = await res.json();
       if (data.success === false) {

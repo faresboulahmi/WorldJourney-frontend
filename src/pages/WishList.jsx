@@ -20,6 +20,7 @@ const clearWish = async () => {
       body: JSON.stringify({
         ...currentUser,
         wishList: [],
+        access_token: currentUser.access_token
       }),
     });
     const data = res.json();

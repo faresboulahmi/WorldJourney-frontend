@@ -141,6 +141,7 @@ export default function UpdateTour() {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
+          access_token: currentUser.access_token
         }),
       });
       const data = await res.json();

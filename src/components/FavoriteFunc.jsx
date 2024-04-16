@@ -24,6 +24,7 @@ export default function FavoriteFunc({ tour }) {
           body: JSON.stringify({
             ...currentUser,
             wishList: wishList,
+            access_token: currentUser.access_token
           }),
         });
         const data = res.json();

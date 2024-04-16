@@ -127,6 +127,7 @@ export default function CreateTourPage() {
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
+          access_token: currentUser.access_token
         }),
       });
       const data = await res.json();

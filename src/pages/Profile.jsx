@@ -87,7 +87,7 @@ export default function Profile() {
           'Content-Type': 'application/json',
         },
         credentials: 'include',
-        body: JSON.stringify(formData),
+        body: JSON.stringify({...formData , access_token: currentUser.access_token}),
       });
       const data = await res.json();
       if (data.success === false) {
@@ -95,7 +95,7 @@ export default function Profile() {
         return;
       }
 
-      dispatch(updateUserSuccess(data));
+      dispatch(updateUserSuccess({...data , access_token: currentUser.access_token}));
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
@@ -108,6 +108,7 @@ export default function Profile() {
       const res = await fetch(`${url}/api/user/delete/${currentUser._id}`, {
         method: 'DELETE',
         credentials: 'include',
+        body: JSON.stringify({access_token: currentUser.access_token})
       });
       const data = await res.json();
       if (data.success === false) {

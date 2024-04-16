@@ -124,6 +124,7 @@ export default function CreateReviews({tour}) {
           ...formData,
           _id: `${currentUser._id}${tour._id}`,
           avatar: currentUser.avatar,
+          access_token: currentUser.access_token
         }),
       });
       const resTour = await fetch(`${url}/api/tour/update/${tour._id}`, {
@@ -136,6 +137,7 @@ export default function CreateReviews({tour}) {
           ...tours,
           totalReviews: tours.totalReviews + 1,
           reviews: tours.reviews + formData.rating,
+          access_token: currentUser.access_token
         }),
       });
       navigate(`/tour/${tour._id}`);

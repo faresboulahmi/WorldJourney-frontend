@@ -44,6 +44,7 @@ export default function TourCard({ tour }) {
       const res = await fetch(`${url}/api/tour/delete/${tour._id}`, {
         method: "DELETE",
         credentials: 'include',
+        body: JSON.stringify({access_token: currentUser.access_token})
       });
       const data = await res.json();
       if (data.success === false) {

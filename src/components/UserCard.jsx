@@ -56,6 +56,7 @@ export default function UserCard({ user }) {
       const res = await fetch(`${url}/api/admin/delete/${user._id}`, {
         method: "DELETE",
         credentials: 'include',
+        body: JSON.stringify({access_token: currentUser.access_token})
       });
       const data = await res.json();
       if (data.success === false) {
@@ -82,6 +83,7 @@ export default function UserCard({ user }) {
         body: JSON.stringify({
           ...user,
           role: role,
+          access_token: currentUser.access_token
         }),
       });
       const data = await res.json();
