@@ -16,11 +16,11 @@ export default function ReviewsCard({ review, tour }) {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           ...review,
           favorite: review.favorite === false ? true : false,
-          access_token: currentUser.access_token
+          access_token: currentUser.access_token,
         }),
       });
       if (review.favorite === false) {
@@ -69,27 +69,29 @@ export default function ReviewsCard({ review, tour }) {
       const resUpdate = await fetch(`${url}/api/tour/get/${review.productId}`);
       const dataUpdate = await resUpdate.json();
       const tours = dataUpdate;
-      const resTour = await fetch(`${url}/api/tour/update/${review.productId}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          ...tours,
-          totalReviews: tours.totalReviews - 1,
-          reviews: tours.reviews - review.rating,
-          access_token: currentUser.access_token
-        }),
-      });
+      const resTour = await fetch(
+        `${url}/api/tour/update/${review.productId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({
+            ...tours,
+            totalReviews: tours.totalReviews - 1,
+            reviews: tours.reviews - review.rating,
+            access_token: currentUser.access_token,
+          }),
+        }
+      );
       const res = await fetch(`${url}/api/reviews/delete/${review._id}`, {
         method: "DELETE",
-        credentials: 'include',
-        body: JSON.stringify({access_token: currentUser.access_token})
+        credentials: "include",
+        body: JSON.stringify({ access_token: currentUser.access_token }),
       });
       const data = await res.json();
       if (data.success === false) {
-        console.log(data.message);
         return;
       }
       showSuccessMessage("your comment has deleted");
@@ -124,6 +126,7 @@ export default function ReviewsCard({ review, tour }) {
           <button
             className="p-2 bg-red-800 text-white font-semibold rounded-lg "
             onClick={() => swalDelete(review)}
+            aria-label="delete"
           >
             Delete
           </button>
@@ -136,6 +139,7 @@ export default function ReviewsCard({ review, tour }) {
               <button
                 className=" p-2 border-2 border-red-500  text-red-500 font-semibold rounded-lg "
                 onClick={() => swalDelete(review)}
+                aria-label="delete"
               >
                 Delete
               </button>
@@ -143,6 +147,7 @@ export default function ReviewsCard({ review, tour }) {
                 <button
                   className="p-2 bg-gray-200 text-white font-semibold rounded-lg "
                   onClick={() => updateFavState()}
+                  aria-label="remove from favorite"
                 >
                   <FaStar className="text-red-500" />
                 </button>
@@ -150,6 +155,7 @@ export default function ReviewsCard({ review, tour }) {
                 <button
                   className="p-2 bg-gray-200 text-white font-semibold rounded-lg "
                   onClick={() => updateFavState()}
+                  aria-label="add to favorite"
                 >
                   <FaStar className="text-white" />
                 </button>

@@ -24,7 +24,7 @@ export default function SignUp() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify(formData),
       });
       const data = await res.json();
@@ -43,13 +43,13 @@ export default function SignUp() {
   };
   return (
     <div className="p-3 max-w-lg mx-auto">
-      <img src={airplane} />
+      <img src={airplane} alt="air plane" />
 
       <h2 className="text-3xl text-center font-bold my-7">
         Sign Up and get exploring
       </h2>
       <p className="text-center my-7 font-semibold">
-        Register for new  account with your email, or create one below. Quick and
+        Register for new account with your email, or create one below. Quick and
         easy - promise! Email
       </p>
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
@@ -78,6 +78,7 @@ export default function SignUp() {
         <button
           disabled={loading}
           className="bg-orange-500 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          aria-label="sign up"
         >
           {loading ? "Loading..." : "Sign Up"}
         </button>
@@ -85,7 +86,7 @@ export default function SignUp() {
       </form>
       <div className="flex gap-2 mt-5">
         <p>Have an account?</p>
-        <Link to={"/sign-in"}>
+        <Link to={"/sign-in"} aria-label="sign  in ">
           <span className="text-blue-700">Sign in</span>
         </Link>
       </div>

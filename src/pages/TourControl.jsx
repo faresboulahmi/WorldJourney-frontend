@@ -13,7 +13,9 @@ export default function TourControl() {
       setLoading(true);
       setShowMore(false);
       try {
-        const res = await fetch(`${url}/api/tour/get?sort=createdAt&order=desc`);
+        const res = await fetch(
+          `${url}/api/tour/get?sort=createdAt&order=desc`
+        );
         const data = await res.json();
         if (data.length > 8) {
           setShowMore(true);
@@ -40,28 +42,25 @@ export default function TourControl() {
       setShowMore(false);
     }
     setTour([...tour, ...data]);
-    
   };
   return (
     <div className="flex flex-row flex-wrap gap-8 p-2 max-w-6xl m-auto mt-8 min-h-[60vh]">
       {loading && (
-            <p className="text-xl text-slate-700 text-center w-full">
-              Loading...
-            </p>
-          )}
+        <p className="text-xl text-slate-700 text-center w-full">Loading...</p>
+      )}
       {tour &&
         currentUser &&
         (currentUser.role === "admin" || currentUser.role === "MainAdmin") &&
-        tour.map((tours) => (<TourCard key={tours._id} tour={tours} />))}
-        {showMore && (
-            <button
-              onClick={onShowMoreClick}
-              className="text-blue-500 hover:underline p-7 text-ce$ w-full"
-            >
-              Show more
-            </button>
-          )}
-
+        tour.map((tours) => <TourCard key={tours._id} tour={tours} />)}
+      {showMore && (
+        <button
+          onClick={onShowMoreClick}
+          className="text-blue-500 hover:underline p-7 text-ce$ w-full"
+          aria-label="show more tours "
+        >
+          Show more
+        </button>
+      )}
     </div>
   );
 }

@@ -32,17 +32,16 @@ export default function UpdateTour() {
   const [loading, setLoading] = useState(false);
   useEffect(() => {
     const fetchTour = async () => {
-        const tourId = params.tourId;
-        const res = await fetch(`${url}/api/tour/get/${tourId}`);
-        const data = await res.json();
-        if (data.success === false) {
-            console.log(data.message);
-            return;
-        }
-        setFormData(data)
-    } 
-    fetchTour()
-  }, [])
+      const tourId = params.tourId;
+      const res = await fetch(`${url}/api/tour/get/${tourId}`);
+      const data = await res.json();
+      if (data.success === false) {
+        return;
+      }
+      setFormData(data);
+    };
+    fetchTour();
+  }, []);
   const handleImageSubmit = (e) => {
     if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
       setUploading(true);
@@ -82,7 +81,7 @@ export default function UpdateTour() {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
+          // console.log(`Upload is ${progress}% done`);
         },
         (error) => {
           reject(error);
@@ -137,11 +136,11 @@ export default function UpdateTour() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
-          access_token: currentUser.access_token
+          access_token: currentUser.access_token,
         }),
       });
       const data = await res.json();
@@ -158,7 +157,7 @@ export default function UpdateTour() {
   return (
     <main className="p-3 max-w-4xl mx-auto ">
       <h1 className="text-3xl font-semibold text-center my-7">
-        Update  Tour Page
+        Update Tour Page
       </h1>
       <form
         onSubmit={handleSubmit}
@@ -273,7 +272,9 @@ export default function UpdateTour() {
             </span>
           </p>
           <p>Upload image less than 2 mb only</p>
-          <p className="text-red-400 text-sm font-semibold">Note*: choose 16/9 aspect picture for better view</p>
+          <p className="text-red-400 text-sm font-semibold">
+            Note*: choose 16/9 aspect picture for better view
+          </p>
           <div className="flex gap-4">
             <input
               onChange={(e) => setFiles(e.target.files)}
@@ -288,6 +289,7 @@ export default function UpdateTour() {
               disabled={uploading}
               onClick={handleImageSubmit}
               className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              aria-label="add image"
             >
               {uploading ? "Uploading..." : "Upload"}
             </button>
@@ -311,6 +313,7 @@ export default function UpdateTour() {
                     type="button"
                     onClick={() => handleRemoveImage(index)}
                     className="p-3 border-2 border-red-800 text-red-800 rounded-lg uppercase hover:opacity-75"
+                    aria-label="remove image"
                   >
                     Delete
                   </button>
@@ -320,6 +323,7 @@ export default function UpdateTour() {
           <button
             disabled={loading || uploading}
             className="p-3 bg-orange-500 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+            aria-label="create tour "
           >
             {loading ? "Creating..." : "Create listing"}
           </button>

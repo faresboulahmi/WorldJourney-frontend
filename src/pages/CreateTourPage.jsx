@@ -68,7 +68,7 @@ export default function CreateTourPage() {
         (snapshot) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(`Upload is ${progress}% done`);
+          // console.log(`Upload is ${progress}% done`);
         },
         (error) => {
           reject(error);
@@ -123,11 +123,11 @@ export default function CreateTourPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           ...formData,
           userRef: currentUser._id,
-          access_token: currentUser.access_token
+          access_token: currentUser.access_token,
         }),
       });
       const data = await res.json();

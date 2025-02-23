@@ -43,12 +43,11 @@ export default function TourCard({ tour }) {
     try {
       const res = await fetch(`${url}/api/tour/delete/${tour._id}`, {
         method: "DELETE",
-        credentials: 'include',
-        body: JSON.stringify({access_token: currentUser.access_token})
+        credentials: "include",
+        body: JSON.stringify({ access_token: currentUser.access_token }),
       });
       const data = await res.json();
       if (data.success === false) {
-        console.log(data.message);
         return;
       }
 
@@ -60,7 +59,7 @@ export default function TourCard({ tour }) {
 
   return (
     <div className="bg-white  shadow-md hover:shadow-lg  transition-shadow overflow-hidden rounded-lg w-[80%] mx-auto   sm:w-[300px] md:w-[240px] relative ">
-      <Link to={`/tour/${tour._id}`}>
+      <Link to={`/tour/${tour._id}`} aria-label="tour page">
         <img
           src={tour.imageUrls}
           alt="tour cover"
@@ -118,11 +117,15 @@ export default function TourCard({ tour }) {
           <button
             className="border-2 border-red-500 rounded-lg text-red-500 font-semibold p-2 hover:bg-red-500 hover:text-white transition-all"
             onClick={() => swalDelete(tour)}
+            aria-label="delete tour"
           >
             Delete
           </button>
-          <Link to={`/update-tour/${tour._id}`}>
-            <button className="border-2 border-blue-500 rounded-lg text-blue-500 font-semibold p-2 hover:bg-blue-500 hover:text-white transition-all">
+          <Link to={`/update-tour/${tour._id}`} aria-label="update tour page">
+            <button
+              className="border-2 border-blue-500 rounded-lg text-blue-500 font-semibold p-2 hover:bg-blue-500 hover:text-white transition-all"
+              aria-label="update tour"
+            >
               Update
             </button>
           </Link>

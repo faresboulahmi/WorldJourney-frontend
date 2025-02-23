@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import ReviewsCard from "./ReviewsCard";
 import { url } from "../url";
 
-export default function CreateReviews({tour}) {
+export default function CreateReviews({ tour }) {
   const { currentUser } = useSelector((state) => state.user);
   const starReviews = [];
   const [formData, setFormData] = useState({
@@ -52,12 +52,15 @@ export default function CreateReviews({tour}) {
       }
     };
     tourReview();
-  }, [render , reviews]);
+  }, [render, reviews]);
 
   // {make the user comment once}
   if (currentUser) {
     for (let i = 0; i < reviews.length; i++) {
-      if (reviews[i]._id === `${currentUser._id}${tour._id}` && repeat === "not") {
+      if (
+        reviews[i]._id === `${currentUser._id}${tour._id}` &&
+        repeat === "not"
+      ) {
         setRepeat("repeated");
       }
     }
@@ -105,7 +108,6 @@ export default function CreateReviews({tour}) {
     });
   };
 
-
   // set Form data function
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
@@ -119,12 +121,12 @@ export default function CreateReviews({tour}) {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           ...formData,
           _id: `${currentUser._id}${tour._id}`,
           avatar: currentUser.avatar,
-          access_token: currentUser.access_token
+          access_token: currentUser.access_token,
         }),
       });
       const resTour = await fetch(`${url}/api/tour/update/${tour._id}`, {
@@ -132,12 +134,12 @@ export default function CreateReviews({tour}) {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           ...tours,
           totalReviews: tours.totalReviews + 1,
           reviews: tours.reviews + formData.rating,
-          access_token: currentUser.access_token
+          access_token: currentUser.access_token,
         }),
       });
       navigate(`/tour/${tour._id}`);
@@ -176,6 +178,7 @@ export default function CreateReviews({tour}) {
             <button
               // type="submit"
               className="text-center font-semibold bg-orange-500 p-2 rounded-lg text-white"
+              aria-label="submit"
             >
               submit
             </button>
@@ -183,6 +186,7 @@ export default function CreateReviews({tour}) {
             <Link
               to={"/sign-in"}
               className="text-center  font-semibold bg-orange-500 p-2 rounded-lg text-white"
+              aria-label="sign in submit"
             >
               submit
             </Link>
@@ -191,10 +195,14 @@ export default function CreateReviews({tour}) {
       </form>
       <div className="flex flex-col gap-4 border-gray-200 border-2 p-2 rounded-lg">
         {reviews &&
-        
           reviews.length > 0 &&
           reviews.map((review) => (
-            <ReviewsCard tour={tour} key={review._id} review={review} tours={tours} />
+            <ReviewsCard
+              tour={tour}
+              key={review._id}
+              review={review}
+              tours={tours}
+            />
           ))}
       </div>
     </div>

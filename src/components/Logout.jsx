@@ -52,7 +52,7 @@ export default function Logout() {
           Logout
         </div>
       ) : (
-        <Link to="/sign-up" className="w-full">
+        <Link to="/sign-up" className="w-full" aria-label="sign up">
           <li className=" text-white text-center  bg-orange-500 p-2  font-semibold rounded-lg cursor-pointer w-full hover:bg-white hover:text-orange-500 transition-all">
             {" "}
             Sign Up

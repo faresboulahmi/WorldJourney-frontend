@@ -15,35 +15,37 @@ import PrivateAdminRoute from "./components/PrivateAdminRoute";
 import TourControl from "./pages/TourControl";
 import UpdateTour from "./pages/UpdateTour";
 import Footer from "./components/Footer";
+import { HelmetProvider } from "react-helmet-async";
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/Tour" element={<Search />} />
-        <Route path="/tour/:tourId" element={<Tour />} />
+    <HelmetProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/search" element={<Search />} />
+          <Route path="/Tour" element={<Search />} />
+          <Route path="/tour/:tourId" element={<Tour />} />
 
-        <Route element={<PrivateRoute />}>
-          <Route path="/profile" element={<Profile />} />
-          <Route path="/WishList" element={<WishList />} />
-        </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/WishList" element={<WishList />} />
+          </Route>
 
-
-        <Route element={<PrivateAdminRoute />}>
-          <Route path="/Dashboard" element={<CreateTourPage />} />
-          <Route path="/users" element={<UserRole />} />
-          <Route path="/tour-control" element={<TourControl/>}/>
-          <Route path="/update-tour/:tourId" element={<UpdateTour/>}/>
-          <Route path="/reviews" element={<ReviewsControle />} />
-          <Route path="/create-tour" element={<CreateTourPage />} />
-        </Route>
-      </Routes>
-      <Footer />
-    </BrowserRouter>
+          <Route element={<PrivateAdminRoute />}>
+            <Route path="/Dashboard" element={<CreateTourPage />} />
+            <Route path="/users" element={<UserRole />} />
+            <Route path="/tour-control" element={<TourControl />} />
+            <Route path="/update-tour/:tourId" element={<UpdateTour />} />
+            <Route path="/reviews" element={<ReviewsControle />} />
+            <Route path="/create-tour" element={<CreateTourPage />} />
+          </Route>
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }

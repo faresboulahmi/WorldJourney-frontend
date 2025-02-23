@@ -15,6 +15,7 @@ import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import FavoriteFunc from "../components/FavoriteFunc";
 import { useSelector } from "react-redux";
 import { url } from "../url";
+import { Helmet } from "react-helmet-async";
 
 export default function Tour() {
   const [tour, setTour] = useState(null);
@@ -51,9 +52,23 @@ export default function Tour() {
 
   return (
     <div>
+      {/* Helmet meta tag */}
+      {tour && (
+        <Helmet>
+          <title>
+            {tour && tour.name} - Book an Amazing Experience | World Journey
+          </title>
+          <meta
+            name="description"
+            content={`Explore ${
+              tour && tour.name
+            } and embark on an unforgettable journey. Check details, reviews, and availability on World Journey.`}
+          />
+        </Helmet>
+      )}
       {loading && (
         <div className="flex justify-center items-center min-h-screen">
-          <p className="text-center my-7 text-2xl"> Loading...</p>
+          <p className="text-center my-7 text-2xl "> Loading...</p>
         </div>
       )}
       {error && (
@@ -68,7 +83,11 @@ export default function Tour() {
               <Swiper navigation pagination>
                 {tour.imageUrls.map((url) => (
                   <SwiperSlide key={url}>
-                    <img src={url} className="aspect-[16/9] w-full " />
+                    <img
+                      src={url}
+                      className="aspect-[16/9] w-full "
+                      alt="tour image"
+                    />
                   </SwiperSlide>
                 ))}
               </Swiper>

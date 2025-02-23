@@ -20,11 +20,11 @@ export default function FavoriteFunc({ tour }) {
           headers: {
             "Content-Type": "application/json",
           },
-          credentials: 'include',
+          credentials: "include",
           body: JSON.stringify({
             ...currentUser,
             wishList: wishList,
-            access_token: currentUser.access_token
+            access_token: currentUser.access_token,
           }),
         });
         const data = res.json();
@@ -55,17 +55,14 @@ export default function FavoriteFunc({ tour }) {
   };
 
   const updateFav = () => {
-
     dispatch(addToWishList(tour));
     showSuccessMessage(`You add this tour  ${tour.name} to your whishList`);
     setWish(true);
   };
   const deleteFav = async () => {
-
     dispatch(removeWishList(tour));
     showSuccessMessage(`this tour  ${tour.name} removed from wishList`);
     setWish(false);
-
   };
 
   return (
@@ -74,16 +71,20 @@ export default function FavoriteFunc({ tour }) {
         <button
           onClick={() => deleteFav()}
           className=" p-2 rounded-lg bg-gray-200"
+          aria-label="remove from favorite"
         >
           <FaStar className="text-red-500" />
         </button>
-      ) : location.href.slice(-7) !== "control" &&(
-        <button
-          onClick={() => updateFav()}
-          className="p-2 rounded-lg bg-gray-200"
-        >
-          <FaStar className="text-white" />
-        </button>
+      ) : (
+        location.href.slice(-7) !== "control" && (
+          <button
+            onClick={() => updateFav()}
+            className="p-2 rounded-lg bg-gray-200"
+            aria-label="add to favorite"
+          >
+            <FaStar className="text-white" />
+          </button>
+        )
       )}
     </div>
   );

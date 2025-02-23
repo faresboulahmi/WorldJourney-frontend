@@ -1,12 +1,12 @@
-import { useSelector } from 'react-redux';
-import { useRef, useState, useEffect } from 'react';
+import { useSelector } from "react-redux";
+import { useRef, useState, useEffect } from "react";
 import {
   getDownloadURL,
   getStorage,
   ref,
   uploadBytesResumable,
-} from 'firebase/storage';
-import { app } from '../firebase';
+} from "firebase/storage";
+import { app } from "../firebase";
 import {
   updateUserStart,
   updateUserSuccess,
@@ -14,16 +14,13 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSuccess,
-} from '../redux/user/userSlice';
-import { useDispatch } from 'react-redux';
-import RightAirplane from '../image/rightAirplane.png';
-import LeftAirplane from '../image/leftAirplane.png';
-import Logout from '../components/Logout'
-import { url } from '../url';
-
-
-
-
+} from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
+import RightAirplane from "../image/rightAirplane.png";
+import LeftAirplane from "../image/leftAirplane.png";
+import Logout from "../components/Logout";
+import { url } from "../url";
+import { Helmet } from "react-helmet-async";
 
 export default function Profile() {
   const fileRef = useRef(null);
@@ -56,7 +53,7 @@ export default function Profile() {
     const uploadTask = uploadBytesResumable(storageRef, file);
 
     uploadTask.on(
-      'state_changed',
+      "state_changed",
       (snapshot) => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
@@ -82,12 +79,15 @@ export default function Profile() {
     try {
       dispatch(updateUserStart());
       const res = await fetch(`${url}/api/user/update/${currentUser._id}`, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        credentials: 'include',
-        body: JSON.stringify({...formData , access_token: currentUser.access_token}),
+        credentials: "include",
+        body: JSON.stringify({
+          ...formData,
+          access_token: currentUser.access_token,
+        }),
       });
       const data = await res.json();
       if (data.success === false) {
@@ -95,7 +95,9 @@ export default function Profile() {
         return;
       }
 
-      dispatch(updateUserSuccess({...data , access_token: currentUser.access_token}));
+      dispatch(
+        updateUserSuccess({ ...data, access_token: currentUser.access_token })
+      );
       setUpdateSuccess(true);
     } catch (error) {
       dispatch(updateUserFailure(error.message));
@@ -106,9 +108,9 @@ export default function Profile() {
     try {
       dispatch(deleteUserStart());
       const res = await fetch(`${url}/api/user/delete/${currentUser._id}`, {
-        method: 'DELETE',
-        credentials: 'include',
-        body: JSON.stringify({access_token: currentUser.access_token})
+        method: "DELETE",
+        credentials: "include",
+        body: JSON.stringify({ access_token: currentUser.access_token }),
       });
       const data = await res.json();
       if (data.success === false) {
@@ -121,90 +123,101 @@ export default function Profile() {
     }
   };
 
-
-
-
   return (
-    <div className='p-3 max-w-lg mx-auto'>
-      <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
+    <div className="p-3 max-w-lg mx-auto">
+      {/* Helmet meta tag */}
+      <Helmet>
+        <title>Your Travel Dashboard – World Journey</title>
+        <meta
+          name="description"
+          content="Manage your bookings, wishlist, and travel preferences in your World Journey profile. Personalized travel planning made easy."
+        />
+      </Helmet>
+      <h1 className="text-3xl font-semibold text-center my-7">Profile</h1>
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         {/* {photo section} */}
-        <div className='flex flex-row gap-4 justify-between items-center'>
-          <img src={LeftAirplane} className='w-20'/>
-          <div className='flex flex-col justify-center '>
-          <input
-          onChange={(e) => setFile(e.target.files[0])}
-          type='file'
-          ref={fileRef}
-          hidden
-          accept='image/*'
-        />
-        <img
-          onClick={() => fileRef.current.click()}
-          src={formData.avatar || currentUser.avatar}
-          alt='profile'
-          className='rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2'
-        />
-        <p className='text-sm self-center mx-20'>
-          {fileUploadError ? (
-            <span className='text-red-700'>
-              Error Image upload (image must be less than 2 mb)
-            </span>
-          ) : filePerc > 0 && filePerc < 100 ? (
-            <span className='text-slate-700'>{`Uploading ${filePerc}%`}</span>
-          ) : filePerc === 100 ? (
-            <span className='text-green-700'>Image successfully uploaded!</span>
-          ) : (
-            ''
-          )}
-        </p>
+        <div className="flex flex-row gap-4 justify-between items-center">
+          <img src={LeftAirplane} className="w-20" alt="left air plane wing" />
+          <div className="flex flex-col justify-center ">
+            <input
+              onChange={(e) => setFile(e.target.files[0])}
+              type="file"
+              ref={fileRef}
+              hidden
+              accept="image/*"
+            />
+            <img
+              onClick={() => fileRef.current.click()}
+              src={formData.avatar || currentUser.avatar}
+              alt="profile"
+              className="rounded-full h-24 w-24 object-cover cursor-pointer self-center mt-2"
+            />
+            <p className="text-sm self-center mx-20">
+              {fileUploadError ? (
+                <span className="text-red-700">
+                  Error Image upload (image must be less than 2 mb)
+                </span>
+              ) : filePerc > 0 && filePerc < 100 ? (
+                <span className="text-slate-700">{`Uploading ${filePerc}%`}</span>
+              ) : filePerc === 100 ? (
+                <span className="text-green-700">
+                  Image successfully uploaded!
+                </span>
+              ) : (
+                ""
+              )}
+            </p>
           </div>
-        <img src={RightAirplane} className='w-20'/>
+          <img
+            src={RightAirplane}
+            className="w-20"
+            alt="right air plane wing"
+          />
         </div>
         {/* {user/email update section } */}
         <input
-          type='text'
-          placeholder='username'
+          type="text"
+          placeholder="username"
           defaultValue={currentUser.username}
-          id='username'
-          className='border p-3 rounded-lg bg-gray-100'
+          id="username"
+          className="border p-3 rounded-lg bg-gray-100"
           onChange={handleChange}
         />
         <input
-          type='email'
-          placeholder='email'
-          id='email'
+          type="email"
+          placeholder="email"
+          id="email"
           defaultValue={currentUser.email}
-          className='border p-3 rounded-lg bg-gray-100'
+          className="border p-3 rounded-lg bg-gray-100"
           onChange={handleChange}
         />
         <input
-          type='password'
-          placeholder='password'
+          type="password"
+          placeholder="password"
           onChange={handleChange}
-          id='password'
-          className='border p-3 rounded-lg bg-gray-100'
+          id="password"
+          className="border p-3 rounded-lg bg-gray-100"
         />
         <button
           disabled={loading}
-          className='bg-blue-500 font-semibold text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80'
+          className="bg-blue-500 font-semibold text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
         >
-          {loading ? 'Loading...' : 'Update'}
+          {loading ? "Loading..." : "Update"}
         </button>
       </form>
-      <div className='flex flex-col gap-4 mt-5'>
+      <div className="flex flex-col gap-4 mt-5">
         <Logout />
         <span
           onClick={handleDeleteUser}
-          className=' cursor-pointer text-center bg-red-600 p-3 rounded-lg text-white font-semibold'
+          className=" cursor-pointer text-center bg-red-600 p-3 rounded-lg text-white font-semibold"
         >
           Delete account
         </span>
       </div>
 
-      <p className='text-red-700 mt-5'>{error ? error : ''}</p>
-      <p className='text-green-700 mt-5'>
-        {updateSuccess ? 'User is updated successfully!' : ''}
+      <p className="text-red-700 mt-5">{error ? error : ""}</p>
+      <p className="text-green-700 mt-5">
+        {updateSuccess ? "User is updated successfully!" : ""}
       </p>
     </div>
   );

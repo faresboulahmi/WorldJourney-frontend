@@ -55,12 +55,11 @@ export default function UserCard({ user }) {
     try {
       const res = await fetch(`${url}/api/admin/delete/${user._id}`, {
         method: "DELETE",
-        credentials: 'include',
-        body: JSON.stringify({access_token: currentUser.access_token})
+        credentials: "include",
+        body: JSON.stringify({ access_token: currentUser.access_token }),
       });
       const data = await res.json();
       if (data.success === false) {
-        console.log(data.message);
         return;
       }
       showSuccessMessage("this tour Deleted successfully");
@@ -79,11 +78,11 @@ export default function UserCard({ user }) {
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: 'include',
+        credentials: "include",
         body: JSON.stringify({
           ...user,
           role: role,
-          access_token: currentUser.access_token
+          access_token: currentUser.access_token,
         }),
       });
       const data = await res.json();
@@ -99,7 +98,11 @@ export default function UserCard({ user }) {
   return (
     <div className=" flex flex-col gap-2  p-2 rounded-lg shadow-md hover:shadow-lg  transition-shadow w-[330px] sm:w-[250px] m-auto">
       <div className="flex flex-col gap-2 justify-center items-center">
-        <img src={user.avatar} className="rounded-full w-20 h-20" />
+        <img
+          src={user.avatar}
+          className="rounded-full w-20 h-20"
+          alt="avatar"
+        />
         <div className="text-center text-slate-700 font-semibold">
           {user.username}
         </div>
@@ -110,9 +113,9 @@ export default function UserCard({ user }) {
       <div className="flex flex-col p-2 gap-2">
         <div className="text-center text-slate-700 font-semibold">
           {createdAtSlice}
-        </div >
+        </div>
         <div className="text-center text-slate-700 font-semibold">
-            this user role is : {user.role}
+          this user role is : {user.role}
         </div>
         {currentUser && currentUser.role === "MainAdmin" && (
           <select
@@ -126,19 +129,25 @@ export default function UserCard({ user }) {
             <option value="user">User</option>
           </select>
         )}
-        {currentUser && currentUser._id === user._id && <p className="text-sm text-red-400 font-semibold">be careful this is your account</p>}
+        {currentUser && currentUser._id === user._id && (
+          <p className="text-sm text-red-400 font-semibold">
+            be careful this is your account
+          </p>
+        )}
       </div>
       {currentUser && currentUser.role === "MainAdmin" && (
         <div className="flex flex-row justify-between p-4 ">
           <button
             className="border-2 border-red-500 rounded-lg text-red-500 font-semibold p-2 hover:bg-red-500 hover:text-white transition-all"
             onClick={() => swalDelete(user)}
+            aria-label="delete user"
           >
             Delete
           </button>
           <button
             className="border-2 border-blue-500 rounded-lg text-blue-500 font-semibold p-2  hover:bg-blue-500 hover:text-white transition-all"
             onClick={() => swalUpdate(user)}
+            aria-label="update user"
           >
             Update
           </button>

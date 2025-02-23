@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import TourCard from "../components/TourCard";
 import { url } from "../url";
 import { FaSearch } from "react-icons/fa";
+import { Helmet } from "react-helmet-async";
 
 export default function Search() {
   const navigate = useNavigate();
@@ -23,11 +24,7 @@ export default function Search() {
     const sortFromUrl = urlParams.get("sort");
     const orderFromUrl = urlParams.get("order");
 
-    if (
-      searchTermFromUrl ||
-      orderFromUrl ||
-      sortFromUrl
-    ) {
+    if (searchTermFromUrl || orderFromUrl || sortFromUrl) {
       setSidebaredata({
         searchTerm: searchTermFromUrl || "",
         order: orderFromUrl || "desc",
@@ -55,7 +52,7 @@ export default function Search() {
   }, [location.search]);
 
   const handleChange = (e) => {
-    if (e.target.id === "searchTerm" ) {
+    if (e.target.id === "searchTerm") {
       setSidebaredata({ ...sidebaredata, [e.target.id]: e.target.value });
     }
 
@@ -96,35 +93,49 @@ export default function Search() {
 
   return (
     <div className="flex flex-col min-h-[50%]">
+      {/* Helmet meta tag */}
+      <Helmet>
+        <title>Find Your Perfect Tour – World Journey</title>
+        <meta
+          name="description"
+          content="Search and book the best travel experiences worldwide. Filter by destination, price, and duration to find the perfect adventure with World Journey."
+        />
+      </Helmet>
       <div className="p-7 border-b-2 md:border-r-2 ">
-      <form onSubmit={handelSubmit} className="flex flex-row h-16 rounded-full bg-gray-200  max-w-fit m-auto ">
-    <div className="flex items-center  min-w-[30%]">
-      <input
-        type="text"
-        id="searchTerm"
-        placeholder="Search..."
-        className="border rounded-full h-full p-3 w-full bg-gray-200 hover:bg-gray-100 outline-none border-none "
-        value={sidebaredata.searchTerm}
-        onChange={handleChange}
-      />
-    </div>
-    <div className="flex items-center gap-2 pr-2   bg-gray-200 rounded-full hover:bg-gray-100">
-      <select
-        onChange={handleChange}
-        defaultValue={"created_at_desc"}
-        id="sort_order"
-        className="  p-3  bg-transparent  max-w-[70%] outline-none border-none"
-      >
-        <option value="regularPrice_desc">Price high to low</option>
-        <option value="regularPrice_asc">Price low to hight</option>
-        <option value="createdAt_desc">Latest</option>
-        <option value="createdAt_asc">Oldest</option>
-      </select>
-    <button className="bg-orange-500 text-white p-3 rounded-full uppercase font-semibold hover:opacity-95">
-      <FaSearch/>
-    </button>
-    </div>
-  </form>
+        <form
+          onSubmit={handelSubmit}
+          className="flex flex-row h-16 rounded-full bg-gray-200  max-w-fit m-auto "
+        >
+          <div className="flex items-center  min-w-[30%]">
+            <input
+              type="text"
+              id="searchTerm"
+              placeholder="Search..."
+              className="border rounded-full h-full p-3 w-full bg-gray-200 hover:bg-gray-100 outline-none border-none "
+              value={sidebaredata.searchTerm}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="flex items-center gap-2 pr-2   bg-gray-200 rounded-full hover:bg-gray-100">
+            <select
+              onChange={handleChange}
+              defaultValue={"created_at_desc"}
+              id="sort_order"
+              className="  p-3  bg-transparent  max-w-[70%] outline-none border-none"
+            >
+              <option value="regularPrice_desc">Price high to low</option>
+              <option value="regularPrice_asc">Price low to hight</option>
+              <option value="createdAt_desc">Latest</option>
+              <option value="createdAt_asc">Oldest</option>
+            </select>
+            <button
+              className="bg-orange-500 text-white p-3 rounded-full uppercase font-semibold hover:opacity-95"
+              aria-label="search"
+            >
+              <FaSearch />
+            </button>
+          </div>
+        </form>
       </div>
       <div className="flex-1">
         <h1 className="max-w-6xl m-auto text-3xl font-semibold  p-3 text-slate-700 my-5 ">
@@ -146,6 +157,7 @@ export default function Search() {
             <button
               onClick={onShowMoreClick}
               className="text-blue-500 hover:underline p-7 text-ce$ w-full"
+              aria-label="show more tours"
             >
               Show more
             </button>

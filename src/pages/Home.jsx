@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay , Pagination} from "swiper/modules";
+import { Navigation, Autoplay, Pagination } from "swiper/modules";
 import SwiperCore from "swiper";
 
 // import  { Autoplay } from 'swiper/core';
@@ -14,12 +14,13 @@ import TourCard from "../components/TourCard";
 import ReviewsCard from "../components/ReviewsCard";
 import { url } from "../url";
 
+import { Helmet } from "react-helmet-async";
 
 export default function Home() {
   const [tour, setTour] = useState([]);
   const [largeTour, setLArgeTour] = useState([]);
   const [reviews, setReviews] = useState([]);
-  SwiperCore.use([Navigation, Autoplay ,Pagination]);
+  SwiperCore.use([Navigation, Autoplay, Pagination]);
   useEffect(() => {
     const fetchTour = async () => {
       try {
@@ -59,6 +60,14 @@ export default function Home() {
   }, []);
   return (
     <div>
+      {/* meta tag helmet */}
+      <Helmet>
+        <title>World Journey – Explore & Book Unforgettable Tours</title>
+        <meta
+          name="description"
+          content="Discover and book incredible travel experiences with World Journey. Explore top destinations and create unforgettable memories with our curated tours."
+        />
+      </Helmet>
       {/* top */}
       <div className="flex  gap-4   flex-col md:flex-row max-w-6xl mx-auto p-3 ">
         <div className="flex flex-col gap-6  px-3 lg:mx-0 sm:mx-auto pt-28">
@@ -74,6 +83,7 @@ export default function Home() {
         <img
           src={HomeImage}
           className="max-w-xl md:max-w-md md:p-8 lg:p-0 lg:pt-28 md:mx-auto md:pt-28 sm:pt-8 sm:p-28 sm:m-auto"
+          alt="home image"
         />
       </div>
       {/* {second section} */}
@@ -94,7 +104,7 @@ export default function Home() {
           {/* {card} */}
           <div className="flex flex-col md:flex-row  justify-center gap-4 pt-8 m-4 pb-12">
             <div className="flex flex-col gap-4 rounded-lg bg-[#FEFCFB] p-8 sm:w-full">
-              <img src={Check} className="w-9" />
+              <img src={Check} className="w-9" alt="check" />
               <h3 className="font-bold text-lg">Sign Up</h3>
               <p className="text-gray-400">
                 Completes all the work associated with planning and processing
@@ -102,7 +112,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-4 rounded-lg bg-[#FEFCFB] p-8 sm:w-full">
-              <img src={Wallet} className="w-9" />
+              <img src={Wallet} className="w-9" alt="wallet" />
               <h3 className="font-bold text-lg">Worth of Money</h3>
               <p className="text-gray-400">
                 After successful access then book from exclusive deals & pricing
@@ -110,7 +120,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-col gap-4 rounded-lg bg-[#FEFCFB] p-8 sm:w-full">
-              <img src={Location} className="w-9" />
+              <img src={Location} className="w-9" alt="location" />
               <h3 className="font-bold text-lg">Exciting Travel</h3>
               <p className="text-gray-400">
                 Start and explore a wide range of exciting travel experience.
@@ -122,20 +132,19 @@ export default function Home() {
 
       {/* swiper  image cover*/}
       <div className="w-full">
-      <Swiper
-        navigation
-        loop={true}
-        autoplay={{ delay: 3000 }}
-      >
-        {tour &&
-          tour.length > 0 &&
-          tour.map((tour) => (
-            <SwiperSlide key={tour._id}>
-              <img src={tour.imageUrls[0]} className="object-cover w-full h-[500px]"/>
-            </SwiperSlide>
-          ))}
-      </Swiper>
-
+        <Swiper navigation loop={true} autoplay={{ delay: 3000 }}>
+          {tour &&
+            tour.length > 0 &&
+            tour.map((tour) => (
+              <SwiperSlide key={tour._id}>
+                <img
+                  src={tour.imageUrls[0]}
+                  className="object-cover w-full h-[500px]"
+                  alt="tour image"
+                />
+              </SwiperSlide>
+            ))}
+        </Swiper>
       </div>
       {/* tour With Offer  */}
       <div className="w-full bg-[#F7F8FC] py-8 sm:py-10 md:py-12 lg:py-14">
@@ -165,7 +174,7 @@ export default function Home() {
                 tour.map((tour) => (
                   <SwiperSlide key={tour._id}>
                     <div className="m-auto my-8">
-                    <TourCard tour={tour} />
+                      <TourCard tour={tour} />
                     </div>
                   </SwiperSlide>
                 ))}
@@ -186,7 +195,7 @@ export default function Home() {
               exciting endeavor! <br /> Here's how we can make the most out of
               your trip with our travel agency's all-inclusive offers!
             </div>
-            <div >
+            <div>
               <Swiper
                 loop={true}
                 autoplay={{ delay: 3000 }}
@@ -202,9 +211,9 @@ export default function Home() {
                   largeTour.length >= 4 &&
                   largeTour.map((tour) => (
                     <SwiperSlide key={tour._id}>
-                     <div className="m-auto my-8 ">
-                     <TourCard tour={tour} />
-                     </div>
+                      <div className="m-auto my-8 ">
+                        <TourCard tour={tour} />
+                      </div>
                     </SwiperSlide>
                   ))}
               </Swiper>
