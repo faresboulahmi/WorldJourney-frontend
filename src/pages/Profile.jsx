@@ -201,6 +201,7 @@ export default function Profile() {
         <button
           disabled={loading}
           className="bg-blue-500 font-semibold text-white rounded-lg p-3 uppercase hover:opacity-95 disabled:opacity-80"
+          aria-label="update profile"
         >
           {loading ? "Loading..." : "Update"}
         </button>

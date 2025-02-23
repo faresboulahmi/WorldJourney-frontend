@@ -273,6 +273,7 @@ export default function CreateTourPage() {
               disabled={uploading}
               onClick={handleImageSubmit}
               className="p-3 text-green-700 border border-green-700 rounded uppercase hover:shadow-lg disabled:opacity-80"
+              aria-label="add image"
             >
               {uploading ? "Uploading..." : "Upload"}
             </button>
@@ -296,6 +297,7 @@ export default function CreateTourPage() {
                     type="button"
                     onClick={() => handleRemoveImage(index)}
                     className="p-3 border-2 border-red-800 text-red-800 rounded-lg uppercase hover:opacity-75"
+                    aria-label="remove image "
                   >
                     Delete
                   </button>
@@ -305,6 +307,7 @@ export default function CreateTourPage() {
           <button
             disabled={loading || uploading}
             className="p-3 bg-orange-500 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+            aria-label="create tour"
           >
             {loading ? "Creating..." : "Create listing"}
           </button>
